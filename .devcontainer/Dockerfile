@@ -8,6 +8,19 @@ FROM bitnami/minideb:latest
 # Install curl and xz-utils
 RUN apt-get update && apt-get install -y curl git xz-utils && rm -rf /var/lib/apt/lists/*
 
+# Install dependencies for building native gems
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    ruby-dev \
+    libssl-dev \
+    zlib1g-dev \
+    libreadline-dev \
+    libyaml-dev\
+    libxml2-dev \
+    libxslt1-dev \
+    libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Install a newer version of glibc manually
 # RUN apt-get update && apt-get install -y wget bison build-essential gawk manpages-dev python3 || { echo "Failed to install build tools"; exit 1; }
 
