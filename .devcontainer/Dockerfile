@@ -44,22 +44,41 @@ RUN apt-get update && apt-get install -y \
 # Install the latest version of glibc using apt-get
 # RUN apt-get update && apt-get install -y libc6 libc6-dev && rm -rf /var/lib/apt/lists/*
 
-# Set the user to vscode
-RUN useradd -m vscode
+# Define a build argument for the user
+ARG USERNAME=vscode
+ARG HOME_DIR=/home/$USERNAME
 
-USER vscode
+# Define HOME explicitly
+ENV HOME=$HOME_DIR
+
+# Set a writable path for Bundler
+ENV BUNDLE_PATH=$HOME_DIR/.bundle
+ENV BUNDLE_HOME=$HOME_DIR/.bundle
+
+# Set the user to the build argument value
+RUN useradd -m $USERNAME
+
+USER $USERNAME
 
 # Install rv in the app directory
 RUN curl -LsSf https://rv.dev/install | sh
 
 # Update environment variables to use the app directory
-RUN echo 'eval "$($HOME/.cargo/bin/rv shell init bash)"' >> /home/vscode/.bashrc
-RUN echo 'eval "$($HOME/.cargo/bin/rv shell completions bash)"' >> /home/vscode/.bashrc
-RUN echo 'rv ruby pin $RUBY_VERSION' >> /home/vscode/.bashrc
+# Use HOME (EnvArg) vs. $HOME_DIR (BuildArg) to ensure the correct path is used in the container 
+RUN echo 'eval "$($HOME/.cargo/bin/rv shell init bash)"' >> $HOME/.bashrc
+RUN echo 'eval "$($HOME/.cargo/bin/rv shell completions bash)"' >> $HOME/.bashrc
+RUN echo 'rv ruby pin $RUBY_VERSION' >> $HOME/.bashrc
 
 # Ensure bash is used as the default shell
 SHELL ["/bin/bash", "-c"]
 
 # RUN source /home/vscode/.cargo/env
-RUN $HOME/.cargo/bin/rv ruby install ${RUBY_VERSION}
-# RUN $HOME/.cargo/bin/rv ruby pin ${RUBY_VERSION}; 
+RUN $HOME_DIR/.cargo/bin/rv ruby install ${RUBY_VERSION}
+# RUN $HOME_DIR/.cargo/bin/rv ruby pin ${RUBY_VERSION}; 
+RUN $HOME_DIR/.cargo/bin/rv run gem install bundler ruby-lsp 
+
+ENV BUNDLE_JOBS=4 \
+    BUNDLE_RETRY=3
+
+# Removed the `bundle config` command as it is redundant with the ENV variables
+# RUN ${HOME_DIR}/.cargo/bin/rv run bundle package
