@@ -34,3 +34,5 @@ end
 group :development do
   gem "web-console"
 end
+
+gem 'ostruct' # since ruby 4.x
