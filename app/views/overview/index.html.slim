@@ -22,8 +22,13 @@ h1 Vimeo Overview
       strong Total Videos:
       = ' '
       = @vimeo_data[:videos_total]
-    - if @vimeo_data[:bio].present?
-      p
-        strong Bio:
-        = ' '
-        = @vimeo_data[:bio]
+    h2 Vimeo Folders
+    - if @vimeo_data[:folders].present?
+      ul
+        - @vimeo_data[:folders].each do |folder|
+          li
+            strong = folder[:name]
+            |  - Videos: 
+            = folder[:video_count]
+    - else
+      p No folders found.
