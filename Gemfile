@@ -15,9 +15,6 @@ gem "solid_queue"
 gem "solid_cable"
 gem "bootsnap", require: false
 
-gem "slim-rails"
-gem "simple_form"
-gem "vimeo_ruby"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -35,6 +32,11 @@ group :development do
   gem "web-console"
 end
 
-gem 'brakeman', require: false, group: :development
-gem 'ostruct' # since ruby 4.x
-gem 'rubocop', require: false, group: :development
+gem "brakeman", require: false, group: :development
+gem "bundler-audit", require: false
+gem "ostruct" # since ruby 4.x
+gem "rubocop", require: false, group: :development
+gem "rubocop-rails-omakase", require: false, group: :development
+gem "simple_form"
+gem "slim-rails"
+gem "vimeo_ruby"
