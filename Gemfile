@@ -35,4 +35,6 @@ group :development do
   gem "web-console"
 end
 
+gem 'brakeman', require: false, group: :development
 gem 'ostruct' # since ruby 4.x
+gem 'rubocop', require: false, group: :development
