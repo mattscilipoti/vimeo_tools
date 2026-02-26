@@ -1,0 +1,11 @@
+h1 Create Account
+
+= simple_form_for @user, url: "/signup" do |f|
+  = f.input :email, label: "Email"
+  = f.input :password, label: "Password"
+  = f.input :password_confirmation, label: "Confirm Password"
+  h3 Vimeo API Credentials (Optional)
+  = f.input :vimeo_client_id, label: "Vimeo Client ID"
+  = f.input :vimeo_client_secret, label: "Vimeo Client Secret"
+  = f.input :vimeo_access_token, label: "Vimeo Access Token"
+  = f.submit "Create Account"

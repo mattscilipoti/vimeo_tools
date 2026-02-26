@@ -1,0 +1,34 @@
+h1 Vimeo Overview
+
+- if @vimeo_data.nil?
+  .alert
+    p No Vimeo credentials configured.
+    p
+      | Update your account with Vimeo API credentials.
+- elsif @vimeo_data[:error]
+  .alert.alert-error
+    p = @vimeo_data[:error]
+- else
+  .vimeo-info
+    p
+      strong Name:
+      = " "
+      = @vimeo_data[:name]
+    p
+      strong Profile Link:
+      = " "
+      = @vimeo_data[:profile_link]
+    p
+      strong Total Videos:
+      = " "
+      = @vimeo_data[:videos_total]
+    h2 Vimeo Folders
+    - if @vimeo_data[:folders].present?
+      ul
+        - @vimeo_data[:folders].each do |folder|
+          li
+            strong = folder[:name]
+            |  - Videos: 
+            = folder[:video_count]
+    - else
+      p No folders found.

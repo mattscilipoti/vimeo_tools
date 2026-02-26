@@ -1,0 +1,21 @@
+{
+  "name": "Debian Bookworm Slim with Ruby",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "DEBUG_RV": "true",
+      "RUBY_VERSION": "4.0.1"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "shopify.ruby-lsp"
+      ]
+    }
+  },
+  // "postCreateCommand": "rv ruby install ${RUBY_VERSION}; rv ruby pin ${RUBY_VERSION}",
+  "postCreateCommand": "rv ruby pin ${RUBY_VERSION} && rv run bundle package && rv run bundle install",
+  "remoteUser": "vscode"
+}
