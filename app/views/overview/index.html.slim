@@ -12,15 +12,15 @@ h1 Vimeo Overview
   .vimeo-info
     p
       strong Name:
-      = ' '
+      = " "
       = @vimeo_data[:name]
     p
       strong Profile Link:
-      = ' '
+      = " "
       = @vimeo_data[:profile_link]
     p
       strong Total Videos:
-      = ' '
+      = " "
       = @vimeo_data[:videos_total]
     h2 Vimeo Folders
     - if @vimeo_data[:folders].present?

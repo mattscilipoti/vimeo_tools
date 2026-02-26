@@ -11,11 +11,11 @@ html
     nav.navbar
       .nav-links
         - if logged_in?
-          = link_to 'Overview', '/overview'
-          = link_to 'Logout', '/logout', data: { turbo_method: :delete }
+          = link_to "Overview", "/overview"
+          = link_to "Logout", "/logout", data: { turbo_method: :delete }
         - else
-          = link_to 'Login', '/login'
-          = link_to 'Sign Up', '/signup'
+          = link_to "Login", "/login"
+          = link_to "Sign Up", "/signup"
     .flash-messages
       - flash.each do |type, msg|
         .flash class="flash-#{type}"= msg
